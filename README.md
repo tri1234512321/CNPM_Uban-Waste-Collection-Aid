@@ -1,5 +1,6 @@
 # CNPM_Uban-Waste-Collection-Aid
 Mn nếu có update file gì thì nhớ update vào đây để theo dõi
+<br/> Code chứa trong GUI/src
 ------------------------------------------------------------
 24/11/2022
 - Hoàn thành giao diện cơ bản.
