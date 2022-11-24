@@ -1,5 +1,5 @@
 # CNPM_Uban-Waste-Collection-Aid
-Mn nếu cáo update file gì thì nhớ update vào đây để theo dõi
+Mn nếu có update file gì thì nhớ update vào đây để theo dõi
 ------------------------------------------------------------
 24/11/2022
 - Hoàn thành giao diện cơ bản.
