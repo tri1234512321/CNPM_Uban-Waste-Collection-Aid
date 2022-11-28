@@ -9,3 +9,5 @@ Mn nếu có update file gì thì nhớ update vào đây để theo dõi
 - Mn có thể thêm 1 số method vào class Data để thao tác với dữ liệu nếu cần
 - Không nên thêm thẳng method vào các class nhỏ.
 ------------------------------------------------------------
+28/11/2022
+- Đổi tên 1 số biến để dễ phân biệt hơn
