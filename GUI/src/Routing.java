@@ -50,6 +50,11 @@ public class Routing extends javax.swing.JFrame{
         });
 
         AssignVecButton.setText("Assign Vechicle");
+        AssignVecButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AssignVecButtonActionPerformed(evt);
+            }
+        });
 
         ManageRouteButton.setText("Manage Route");
         ManageRouteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +151,7 @@ public class Routing extends javax.swing.JFrame{
     private void CreateRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateRouteButtonActionPerformed
         // TODO add your handling code here:
         this.jPanel1.removeAll();
+        this.jPanel1.repaint();
         System.out.println(this.jPanel1.getSize());
         System.out.println("Routig : Clicked Create Route button");
         JButton Save = new JButton("Save");
@@ -226,10 +232,14 @@ public class Routing extends javax.swing.JFrame{
                }
                int RouteID = Routing.this.data.Routes_data.size();
                Route newRoute = new Route(RouteID,RouteName);
+               ArrayList<MCP> MCPList = new ArrayList<>();
                for(int i = 0; i < model.getSize();i++){
                    int id = Integer.parseInt(model.getElementAt(i).toString().split("MCP ")[1]);
-                   Routing.this.data.MCPs_data.get(id).route = newRoute;                 
+                   MCP mcp = Routing.this.data.MCPs_data.get(id);
+                   mcp.route = newRoute; 
+                   MCPList.add(mcp);
                }
+               newRoute.ListMCPs = MCPList;
                Routing.this.data.Routes_data.add(newRoute);
                JOptionPane.showMessageDialog(Routing.this,"Saved");
                Routing.this.CreateRouteButtonActionPerformed(evt);
@@ -240,6 +250,67 @@ public class Routing extends javax.swing.JFrame{
     private void ManageRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageRouteButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ManageRouteButtonActionPerformed
+
+    private void AssignVecButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignVecButtonActionPerformed
+        // TODO add your handling code here:
+        this.jPanel1.removeAll();
+        this.jPanel1.repaint();
+        System.out.println("Routing : Clicked AssignVecButton");
+        JLabel RouteLabel = new JLabel("Choose a Route:");
+        JComboBox RouteChooser = new JComboBox();
+        JLabel VecLabel = new JLabel("Choose a Vec:");
+        JButton AssignButton = new JButton("Assign");
+        JComboBox VecChooser = new JComboBox();
+        
+        int size = this.data.Routes_data.size();
+        for(int i = 0 ; i < size ; i++){
+            RouteChooser.addItem(this.data.Routes_data.get(i).name);
+        }
+        
+        size = this.data.Vechicles_data.size();
+        for(int i = 0 ; i < size ; i++){
+            VecChooser.addItem("Vechicle "+this.data.Vechicles_data.get(i).id);
+        }
+        
+        this.jPanel1.add(RouteLabel);
+        RouteLabel.setBounds(10, 40, 100, 20);
+        
+        this.jPanel1.add(VecLabel);
+        VecLabel.setBounds(10,110,100,30);
+        
+        this.jPanel1.add(AssignButton);
+        AssignButton.setBounds(40,230,70,25);
+        
+        this.jPanel1.add(RouteChooser);
+        RouteChooser.setBounds(10, 70, 100, 30);
+        
+        this.jPanel1.add(VecChooser);
+        VecChooser.setBounds(10,150,100,30);
+        
+        VecChooser.setSelectedIndex(-1);
+        RouteChooser.setSelectedIndex(-1);
+        
+        AssignButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                String Route = RouteChooser.getSelectedItem().toString();
+                int  VecID = Integer.parseInt(VecChooser.getSelectedItem()
+                                        .toString().split("Vechicle ")[1]);
+                Route route = Function.getRouteByName(Route);
+                Vechicle vec = Function.getVecByID(VecID);
+                if(route.vechicle != null){
+                    route.vechicle.route = null;
+                }
+                if(vec.route != null){
+                    vec.route.vechicle = null;
+                }
+                route.vechicle = vec;
+                vec.route = route;
+                JOptionPane.showMessageDialog(Routing.this,"Assigned");
+                AssignVecButtonActionPerformed(evt);
+            }
+        });
+        
+    }//GEN-LAST:event_AssignVecButtonActionPerformed
 
     /**
      * @param args the command line arguments
