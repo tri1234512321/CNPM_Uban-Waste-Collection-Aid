@@ -1,6 +1,7 @@
 # CNPM_Uban-Waste-Collection-Aid
 Mn nếu có update file gì thì nhớ update vào đây để theo dõi
 <br/> Code chứa trong GUI/src
+</br> Có thể chạy thử app k cần source bằng cách tải GUI/dist/GUI.jar và chạy câu lệnh 'java -jar GUI.jar'
 ------------------------------------------------------------
 24/11/2022
 - Hoàn thành giao diện cơ bản.
@@ -11,3 +12,8 @@ Mn nếu có update file gì thì nhớ update vào đây để theo dõi
 ------------------------------------------------------------
 28/11/2022
 - Đổi tên 1 số biến để dễ phân biệt hơn
+--------------------------------------------------------------
+29/11/2022
+- Xong phần Create Route.
+- Add và hoàn thiện chức năng xem thông tin ở MainPage.
+------------------------------------------------------
