@@ -16,10 +16,11 @@ public class Data {
     static ArrayList<MCP> MCPs_data = new ArrayList();
     static ArrayList<Vechicle> Vechicles_data = new ArrayList();
     Data(){}
-    public void add_Data(Route route,Collector collector, MCP mcp, Vechicle vechicle){
+    public void add_Data(Route route,Collector collector,Janitor janitor, MCP mcp, Vechicle vechicle){
         this.Routes_data.add(route);
         this.Collectors_data.add(collector);
         this.MCPs_data.add(mcp);
         this.Vechicles_data.add(vechicle);
+        this.Janitors_data.add(janitor);
     }
 }
