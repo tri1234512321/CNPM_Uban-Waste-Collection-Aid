@@ -18,4 +18,5 @@ Mn nếu có update file gì thì nhớ update vào đây để theo dõi
 - Add và hoàn thiện chức năng xem thông tin ở MainPage.\
 Update 21h:
 - update chức năng xem thông tin. Double click vào 1 đối tượng trong list sẽ hiện ra thông tin cuaa3 đối tượng đó.
+- Hoàn thiện chức năng assign vec to route trong phần routing.
 ------------------------------------------------------
