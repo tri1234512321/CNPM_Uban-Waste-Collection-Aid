@@ -9,6 +9,8 @@
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 public class Routing extends javax.swing.JFrame{
     
     /**
@@ -50,6 +52,11 @@ public class Routing extends javax.swing.JFrame{
         AssignVecButton.setText("Assign Vechicle");
 
         ManageRouteButton.setText("Manage Route");
+        ManageRouteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ManageRouteButtonActionPerformed(evt);
+            }
+        });
 
         OptimizeButton.setText("Optimize");
         OptimizeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -70,7 +77,7 @@ public class Routing extends javax.swing.JFrame{
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
 
         BackButton.setText("Back");
@@ -89,36 +96,36 @@ public class Routing extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(BackButton))
+                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CreateRouteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(AssignVecButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ManageRouteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(OptimizeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(OptimizeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ManageRouteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AssignVecButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CreateRouteButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(BackButton)
-                        .addGap(27, 27, 27)
-                        .addComponent(CreateRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(AssignVecButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ManageRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(OptimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 68, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(CreateRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(AssignVecButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(ManageRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(OptimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -138,37 +145,101 @@ public class Routing extends javax.swing.JFrame{
 
     private void CreateRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateRouteButtonActionPerformed
         // TODO add your handling code here:
+        this.jPanel1.removeAll();
+        System.out.println(this.jPanel1.getSize());
         System.out.println("Routig : Clicked Create Route button");
+        JButton Save = new JButton("Save");
         JLabel Routename = new JLabel("Route Name:");
+        JList AvailableMCP = new JList();
+        JButton addButton = new JButton("Add");
+        JTextField Routenamefield = new JTextField("Enter Route Name");
+        JList Selected = new JList();
+        JScrollPane MCPlist = new JScrollPane();
+        JScrollPane SelectedMCPlist = new JScrollPane();
+        
         this.jPanel1.add(Routename);
         Routename.setBounds(10,10,100,20);
-        JTextField Routenamefield = new JTextField("Enter Route Name");
+
         this.jPanel1.add(Routenamefield);
         Routenamefield.setBounds(5,30,140,30);
-        JButton Save = new JButton("Save");
+
         this.jPanel1.add(Save);
-        Save.setBounds(45,250,60,25);
-        Save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                System.out.println("Routing->Create Route: Clicked Save button");
-                 JOptionPane.showMessageDialog(null,"Saved");
-            }
-        });
+        Save.setBounds(50,290,60,25);
+        
         DefaultListModel<String> MCP_list = new DefaultListModel<>();
         for(MCP val: this.data.MCPs_data){
             if(val.route == null){
                 MCP_list.addElement("MCP "+ val.id);
             }
         }
-        JList list = new JList();
-        list.setModel(MCP_list);
-        JLabel MCPlabel = new JLabel("MCPs list:");
+        AvailableMCP.setModel(MCP_list);
+        JLabel MCPlabel = new JLabel("Available MCPs:");
         this.jPanel1.add(MCPlabel);
         MCPlabel.setBounds(10,70,100,20);
-        JScrollPane MCPlist = new JScrollPane(list);
+        MCPlist.setViewportView(AvailableMCP);
+        SelectedMCPlist.setViewportView(Selected);
+        
         this.jPanel1.add(MCPlist);
-        MCPlist.setBounds(5,90,145, 70);
+        MCPlist.setBounds(5,90,145, 80);
+        this.jPanel1.add(SelectedMCPlist);
+        SelectedMCPlist.setBounds(5, 200, 145, 80);
+        
+        DefaultListModel<String> SelectedMCP = new DefaultListModel<>();
+        this.jPanel1.add(addButton);
+        addButton.setBounds(50,170,60,25);
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String select = AvailableMCP.getSelectedValue().toString();
+                System.out.println("Routing->Create Route: Added "+select);
+                SelectedMCP.addElement(select);
+                MCP_list.removeElement(select);
+                AvailableMCP.setModel(MCP_list);
+                Selected.setModel(SelectedMCP);
+                MCPlist.setViewportView(AvailableMCP);
+                SelectedMCPlist.setViewportView(Selected);
+            }
+        });
+        
+        AvailableMCP.addMouseListener(new MouseAdapter(){
+                public void mouseClicked(MouseEvent evt) {
+                    if (evt.getClickCount() == 2) {
+                        String select = AvailableMCP.getSelectedValue().toString();
+                        if(select.equals("")) return;
+                        System.out.println("Routing->Create Route: Added "+select);
+                        SelectedMCP.addElement(select);
+                        MCP_list.removeElement(select);
+                        AvailableMCP.setModel(MCP_list);
+                        Selected.setModel(SelectedMCP);
+                        MCPlist.setViewportView(AvailableMCP);
+                        SelectedMCPlist.setViewportView(Selected);
+                    }
+                }
+        });
+        
+        Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+               ListModel model = Selected.getModel();
+               String RouteName = Routenamefield.getText();
+               if(RouteName.equals("") || RouteName.equals("Enter Route Name")){
+                   JOptionPane.showMessageDialog(Routing.this,"Enter Route Name:");
+                   return;
+               }
+               int RouteID = Routing.this.data.Routes_data.size();
+               Route newRoute = new Route(RouteID,RouteName);
+               for(int i = 0; i < model.getSize();i++){
+                   int id = Integer.parseInt(model.getElementAt(i).toString().split("MCP ")[1]);
+                   Routing.this.data.MCPs_data.get(id).route = newRoute;                 
+               }
+               Routing.this.data.Routes_data.add(newRoute);
+               JOptionPane.showMessageDialog(Routing.this,"Saved");
+               Routing.this.CreateRouteButtonActionPerformed(evt);
+            }
+        });
     }//GEN-LAST:event_CreateRouteButtonActionPerformed
+
+    private void ManageRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageRouteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ManageRouteButtonActionPerformed
 
     /**
      * @param args the command line arguments

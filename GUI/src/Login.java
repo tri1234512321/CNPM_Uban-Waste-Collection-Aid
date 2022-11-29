@@ -108,7 +108,8 @@ public class Login extends javax.swing.JFrame {
             Collector collector = new Collector(i,"Collector "+i);
             MCP mcp = new MCP(i,"Location "+i);
             Vechicle vechicle = new Vechicle(i,i+10+" l/km");
-            data.add_Data(route, collector, mcp, vechicle);
+            Janitor janitor = new Janitor(i,"Janitor "+i);
+            data.add_Data(route, collector,janitor, mcp, vechicle);
         }    
     }
     /**
