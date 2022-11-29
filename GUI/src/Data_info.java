@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 public class Data_info extends javax.swing.JFrame {
 
@@ -52,6 +53,11 @@ public class Data_info extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        ObjectList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ObjectListMouseClicked(evt);
+            }
+        });
         ObjectPane.setViewportView(ObjectList);
 
         BackButton.setText("Back");
@@ -152,8 +158,9 @@ public class Data_info extends javax.swing.JFrame {
         if(this.ObjectChooser.getSelectedItem() == null) return;
         selected = this.ObjectChooser.getSelectedItem().toString();
         DefaultListModel listmodel = new DefaultListModel();
-        Function.getData(listmodel, selected);
-        Function.showObjectonList(listmodel, this.ObjectPane);
+        Function.getData(listmodel,selected);
+        Function.showObjectonList(listmodel,this.ObjectList, this.ObjectPane);
+        this.ObjectList.setModel(listmodel);
     }//GEN-LAST:event_GetButtonActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
@@ -170,43 +177,45 @@ public class Data_info extends javax.swing.JFrame {
         String selected = this.ObjectChooser.getSelectedItem().toString();
         DefaultListModel listmodel = new DefaultListModel();
         Function.search(listmodel, searchString,selected);
-        Function.showObjectonList(listmodel, this.ObjectPane);
+        Function.showObjectonList(listmodel,this.ObjectList, this.ObjectPane);
     }//GEN-LAST:event_SearchButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    private void ObjectListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ObjectListMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() >= 2) {
+            String select = ObjectList.getSelectedValue();
+            switch(this.ObjectChooser.getSelectedItem().toString()){
+                case "Route":
+                    Route route = Function.getRouteByName(select);
+                    String out = new String("Route name: "+route.name);
+                    out = out +"\nID: "+ route.id;
+                    if(route.vechicle == null) out = out + "\nVechicleID: null";
+                    else out = out + "\nVechicleID: " + route.vechicle.id;
+                    String MCPs = new String("\nMCPs: ");
+                    if(route.ListMCPs != null){
+                        int size = route.ListMCPs.size();
+                        MCPs = MCPs + "MCP "+route.ListMCPs.get(0).id;
+                        for(int i = 1; i < size ; i++){
+                            MCP mcp = route.ListMCPs.get(i);
+                            MCPs = MCPs + "->MCP " +mcp.id; 
+                        }
+                    }
+                    if(MCPs.equals("\nMCPs: ")) out = out + MCPs +"null";
+                    else out = out + MCPs;
+                    JOptionPane.showMessageDialog(this, out,"Route Info",1);
                     break;
-                }
+                case "Collector":
+                    break;
+                case "Janitor":
+                    break;
+                case "MCP":
+                    break;
+                case "Vechicle":
+                    break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Data_info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Data_info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Data_info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Data_info.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_ObjectListMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Data_info().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
