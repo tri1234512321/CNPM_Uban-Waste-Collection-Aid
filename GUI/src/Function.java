@@ -59,7 +59,7 @@ public class Function {
     }
     
     //search tên object có chuỗi searchString và loại object là searchObject và đưa kết quả vào model
-    //vd search(model,"ABC",data.Collector_data) đưa vào model các Collector có tên chứa chuỗi "ABC);
+    //vd search(model,"ABC","Collector") đưa vào model các Collector có tên chứa chuỗi "ABC);
     public static void search(DefaultListModel model,String searchString,String searchObject){
         int size;
         switch(searchObject){
