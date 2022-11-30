@@ -52,9 +52,9 @@
               <Component id="BackButton" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="CreateRouteButton" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="AssignVecButton" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="ManageRouteButton" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="OptimizeButton" min="-2" pref="37" max="-2" attributes="0"/>
@@ -81,6 +81,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Assign Vechicle"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AssignVecButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ManageRouteButton">
       <Properties>
@@ -89,6 +92,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ManageRouteButtonActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Routing_ManageRouteButton"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="OptimizeButton">
       <Properties>
