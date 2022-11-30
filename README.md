@@ -23,4 +23,7 @@ Update 21h:
 30/11/2022\
 Update 13h10
 - Hoàn thành chức năng Mangae Route phần routing
-- Cập nhật thông tin khi double click ở phần info -> Thêm độ dài của route.
+- Cập nhật thông tin khi double click ở phần info -> Thêm độ dài của route.\
+Update 15h45
+- Hoàn thành chức năng Optimize ở phần routing.
+- Cập nhận thông tin MCP và vechicle khi double vào 2 loại đối tượng này ở phần xem info
