@@ -9,7 +9,7 @@
  */
 import java.util.Random;
 public class MCP {
-    static int[][] DistanceToOthers = new int[10][10];
+    static int[][] DistanceToOthers = new int[20][20];
     int id;
     String location;
     Route route;
@@ -23,8 +23,8 @@ public class MCP {
     
     void setDistance(){
         Random random = new Random();
-        for(int i = 0 ; i < 10 ; i++){
-            for(int j = i ; j <10 ; j++){
+        for(int i = 0 ; i < 20 ; i++){
+            for(int j = i ; j <20 ; j++){
                 if(i == j) this.DistanceToOthers[i][j] = 0;
                 else{
                     this.DistanceToOthers[i][j] = random.nextInt(100)+1;

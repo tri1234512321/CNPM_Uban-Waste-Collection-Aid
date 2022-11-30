@@ -206,8 +206,27 @@ public class Data_info extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, out,"Route Info",1);
                     break;
                 case "Collector":
+                    Collector collector = Function.getCollectorByname(select);
+                    out = out + "Name: "+collector.name +"\nID: "+collector.id;
+                    if(collector.vechicle==null) out = out + "\nVechicleID: null";
+                    else out = out + "\nVechicleID: " +collector.vechicle.id;
+                    JOptionPane.showMessageDialog(this, out,"Collector Info",1);
                     break;
                 case "Janitor":
+                    Janitor janitor = Function.getJanitorByName(select);
+                    out = out + "Name: "+janitor.name+ "\nID: "+janitor.id;
+                    if(janitor.MCPList.isEmpty()) out = out + "\nMCPs: null";
+                    else{
+                        String mcps = new String("\nMCPs: ");
+                        int size = janitor.MCPList.size();
+                        mcps = mcps + "MCP "+janitor.MCPList.get(0).id;
+                        for(int i = 1; i < size ; i++){
+                            MCP mcp = janitor.MCPList.get(i);
+                            mcps = mcps + ",MCP " +mcp.id; 
+                        }
+                        out = out + mcps;
+                    }
+                    JOptionPane.showMessageDialog(Data_info.this, out,"Janitor info",1);
                     break;
                 case "MCP":
                     int MCPid = Integer.parseInt(select.split("MCP ")[1]);

@@ -103,17 +103,35 @@ public class Login extends javax.swing.JFrame {
     
     public void Generate_data(){
         Data data = new Data();
-        for(int i = 0; i <10 ; i++){
+        for(int i = 0; i <5 ; i++){
             Route route = new Route(i,"Route "+i);
             route.Not_Optimized.add(route);
             Collector collector = new Collector(i,"Collector "+i);
-            MCP mcp = new MCP(i,"Location "+i);
             Vechicle vechicle = new Vechicle(i,i+10);
             vechicle.Not_Optimized.add(vechicle);
             Janitor janitor = new Janitor(i,"Janitor "+i);
-            data.add_Data(route, collector,janitor, mcp, vechicle);
+            data.add_Data(route, collector,janitor, vechicle);
+        }
+        for(int i = 5 ; i< 10; i++){
+            Vechicle vechicle = new Vechicle(i,i+10);
+            vechicle.Not_Optimized.add(vechicle);
+            data.Vechicles_data.add(vechicle);
+        }
+        for(int i = 0 ; i < 20 ; i++){
+            MCP mcp = new MCP(i,"Location "+i);
+            data.MCPs_data.add(mcp);
         }
         data.MCPs_data.get(0).setDistance();
+        for(int i = 0 ; i < 5 ; i++){
+            MCP mcp1 = data.MCPs_data.get(i);
+            MCP mcp2 = data.MCPs_data.get(i+5);
+            Route route = data.Routes_data.get(i);
+            route.ListMCPs.add(mcp1);
+            route.ListMCPs.add(mcp2);
+            mcp1.route = route;
+            mcp2.route = route;
+            route.setDistance();
+        }
     }
     /**
      * @param args the command line arguments
