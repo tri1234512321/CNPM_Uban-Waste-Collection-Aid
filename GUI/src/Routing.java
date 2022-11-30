@@ -322,6 +322,8 @@ public class Routing extends javax.swing.JFrame{
             public void actionPerformed(ActionEvent evt){
                 String routeName = RouteChooser.getSelectedItem().toString();
                 Route route = Function.getRouteByName(routeName);
+                CurrentMCP.removeAllElements();
+                AvailableMCP.removeAllElements();
                 int size;
                 if(route.ListMCPs == null) size = 0;
                 else size = route.ListMCPs.size();

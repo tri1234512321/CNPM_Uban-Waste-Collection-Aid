@@ -26,9 +26,9 @@ public class Route {
     }
     
     public void setDistance(){
-        this.distance = 0;
         int size = ListMCPs.size();
         if(size == 0) return;
+        this.distance = 0;
         int[][] DistanceToOthers = this.ListMCPs.get(0).DistanceToOthers;
         int[] id = new int[size];
         for(int i = 0 ; i < size ; i++){
