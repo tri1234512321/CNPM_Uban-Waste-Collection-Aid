@@ -15,5 +15,6 @@ public class Janitor {
     public Janitor(int id, String name){
         this.id = id;
         this.name = name;
+        this.MCPList = new ArrayList();
     }    
 }

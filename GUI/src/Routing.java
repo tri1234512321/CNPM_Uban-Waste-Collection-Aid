@@ -157,11 +157,11 @@ public class Routing extends javax.swing.JFrame{
         }
         for(int i = 0 ; i < size1 ; i++){
             Route route = Function.getMinRouteNotOptimized();
-            if(route.distance == 9999999) break;
             if(route == null){
                 JOptionPane.showMessageDialog(this,"All Routes are optimized");
                 return;
             }
+             if(route.distance == 9999999) break;
             Vechicle vec = Function.getMaxConsumptionVec();
             if(vec == null){
                 JOptionPane.showMessageDialog(this,"All Vechicles are optimized");
@@ -474,14 +474,16 @@ public class Routing extends javax.swing.JFrame{
                                         .toString().split("Vechicle ")[1]);
                 Route route = Function.getRouteByName(Route);
                 Vechicle vec = Function.getVecByID(VecID);
-                if(route.optimized==true){
+                if(route.optimized==true || vec.optimzed == true){
                     int ret = JOptionPane.showConfirmDialog(Routing.this,"This Route or Vechicle is optimized. Do you still want to assign?","Confirm",0);
                     if(ret != 0) return;
                 }
                 if(route.vechicle != null){
+                    route.vechicle.optimzed = false;
                     route.vechicle.route = null;
                 }
                 if(vec.route != null){
+                    vec.route.optimized = false;
                     vec.route.vechicle = null;
                 }
                 route.vechicle = vec;

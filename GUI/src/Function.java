@@ -119,6 +119,24 @@ public class Function {
         return null;
     }
     
+    public static Janitor getJanitorByName(String name){
+        int size = data.Janitors_data.size();
+        for(int i = 0 ; i < size ; i++){
+            if(data.Janitors_data.get(i).name.equals(name)) 
+               return data.Janitors_data.get(i) ;
+            }
+        return null;
+    }
+    
+    public static Collector getCollectorByname(String name){
+        int size = data.Collectors_data.size();
+        for(int i = 0 ; i < size ; i++){
+            if(data.Collectors_data.get(i).name.equals(name)) 
+               return data.Collectors_data.get(i) ;
+            }
+        return null;
+    }
+    
     public static MCP getMcpByID(int id){
         int size = data.MCPs_data.size();
         for(int i = 0 ; i < size ; i++){
