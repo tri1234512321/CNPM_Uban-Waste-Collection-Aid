@@ -20,3 +20,7 @@ Update 21h:
 - update chức năng xem thông tin. Double click vào 1 đối tượng trong list sẽ hiện ra thông tin cuaa3 đối tượng đó.
 - Hoàn thiện chức năng assign vec to route trong phần routing.
 ------------------------------------------------------
+30/11/2022\
+Update 13h10
+- Hoàn thành chức năng Mangae Route phần routing
+- Cập nhật thông tin khi double click ở phần info -> Thêm độ dài của route.
