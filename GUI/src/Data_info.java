@@ -160,7 +160,6 @@ public class Data_info extends javax.swing.JFrame {
         DefaultListModel listmodel = new DefaultListModel();
         Function.getData(listmodel,selected);
         Function.showObjectonList(listmodel,this.ObjectList, this.ObjectPane);
-        this.ObjectList.setModel(listmodel);
     }//GEN-LAST:event_GetButtonActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
@@ -202,6 +201,7 @@ public class Data_info extends javax.swing.JFrame {
                     }
                     if(MCPs.equals("\nMCPs: ")) out = out + MCPs +"null";
                     else out = out + MCPs;
+                    out = out + "\nDistance: " + route.distance+" km";
                     JOptionPane.showMessageDialog(this, out,"Route Info",1);
                     break;
                 case "Collector":

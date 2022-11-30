@@ -240,6 +240,7 @@ public class Routing extends javax.swing.JFrame{
                    MCPList.add(mcp);
                }
                newRoute.ListMCPs = MCPList;
+               newRoute.setDistance();
                Routing.this.data.Routes_data.add(newRoute);
                JOptionPane.showMessageDialog(Routing.this,"Saved");
                Routing.this.CreateRouteButtonActionPerformed(evt);
@@ -249,6 +250,140 @@ public class Routing extends javax.swing.JFrame{
 
     private void ManageRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageRouteButtonActionPerformed
         // TODO add your handling code here:
+        this.jPanel1.removeAll();
+        this.jPanel1.repaint();
+        System.out.println("Routing : Clicked ManageRouteButton");
+        JLabel RouteLabel = new JLabel("Choose a Route:");
+        JComboBox RouteChooser = new JComboBox();
+        JLabel CurMCPs = new JLabel("Current MCPs:");
+        JScrollPane CurMCPpane = new JScrollPane();
+        JList CurMCPList = new JList();
+        JScrollPane AvailableMCPpane = new JScrollPane();
+        JList AvailableMCPList = new JList();
+        JButton RemoveButton = new JButton("Remove");
+        JLabel AvaiMCP = new JLabel("Available MCPs:");
+        JButton AddButton = new JButton("Add");
+        DefaultListModel CurrentMCP = new DefaultListModel();
+        DefaultListModel AvailableMCP = new DefaultListModel();
+        
+        CurMCPpane.setViewportView(CurMCPList);
+        AvailableMCPpane.setViewportView(AvailableMCPList);
+        
+        int size = this.data.Routes_data.size();
+        for(int i = 0 ; i < size ; i++){
+                    RouteChooser.addItem(this.data.Routes_data.get(i).name);
+        }
+        
+        RouteChooser.setSelectedIndex(-1);
+        
+        RouteChooser.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                String routeName = RouteChooser.getSelectedItem().toString();
+                Route route = Function.getRouteByName(routeName);
+                int size;
+                if(route.ListMCPs == null) size = 0;
+                else size = route.ListMCPs.size();
+                for(int i = 0 ; i < size ; i++){
+                    CurrentMCP.addElement("MCP "+route.ListMCPs.get(i).id);
+                }
+                Function.showObjectonList(CurrentMCP,CurMCPList, CurMCPpane);
+                size = Routing.this.data.MCPs_data.size();
+                for(int i = 0 ; i < size ; i++){
+                    MCP mcp = Routing.this.data.MCPs_data.get(i);
+                    if(mcp.route == null) AvailableMCP.addElement("MCP "+mcp.id);
+                }
+                Function.showObjectonList(AvailableMCP, AvailableMCPList, AvailableMCPpane);
+            }
+        });
+        
+        CurMCPList.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evt){
+                if(evt.getClickCount() >= 2){
+                    Route route = Function.getRouteByName(RouteChooser.getSelectedItem().toString());
+                    int MCPid = Integer.parseInt(CurMCPList.getSelectedValue().toString().split("MCP ")[1]); 
+                    MCP mcp = Function.getMcpByID(MCPid);
+                    mcp.route = null;
+                    route.ListMCPs.remove(mcp);
+                    route.setDistance();
+                    CurrentMCP.removeElement("MCP " + mcp.id);
+                    AvailableMCP.addElement("MCP "+mcp.id);
+                    Function.showObjectonList(CurrentMCP, CurMCPList, CurMCPpane);
+                    Function.showObjectonList(AvailableMCP, AvailableMCPList,AvailableMCPpane);
+                }
+            }
+        });
+        
+        AvailableMCPList.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evt){
+                if(evt.getClickCount() >= 2){
+                    Route route = Function.getRouteByName(RouteChooser.getSelectedItem().toString());
+                    int MCPid = Integer.parseInt(AvailableMCPList.getSelectedValue().toString().split("MCP ")[1]);
+                    MCP mcp = Function.getMcpByID(MCPid);
+                    mcp.route = route;
+                    route.ListMCPs.add(mcp);
+                    route.setDistance();
+                    CurrentMCP.addElement("MCP " + mcp.id);
+                    AvailableMCP.removeElement("MCP "+mcp.id);
+                    Function.showObjectonList(CurrentMCP, CurMCPList, CurMCPpane);
+                    Function.showObjectonList(AvailableMCP, AvailableMCPList,AvailableMCPpane);
+                }
+                
+            }
+        });
+        
+        this.jPanel1.add(RouteLabel);
+        RouteLabel.setBounds(10, 10, 100, 20);
+        
+        this.jPanel1.add(RouteChooser);
+        RouteChooser.setBounds(10, 30, 100, 30);
+        
+        this.jPanel1.add(CurMCPs);
+        CurMCPs.setBounds(10, 60, 100, 20);
+        
+        this.jPanel1.add(CurMCPpane);
+        CurMCPpane.setBounds(10, 80, 130, 80);
+        
+        this.jPanel1.add(RemoveButton);
+        RemoveButton.setBounds(35,160,80,25);
+        
+        this.jPanel1.add(AvaiMCP);
+        AvaiMCP.setBounds(10,185,100,20);
+        
+        this.jPanel1.add(AvailableMCPpane);
+        AvailableMCPpane.setBounds(10, 205, 130, 80);
+        
+        this.jPanel1.add(AddButton);
+        AddButton.setBounds(50,285,50,25);
+        
+        AddButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                Route route = Function.getRouteByName(RouteChooser.getSelectedItem().toString());
+                    int MCPid = Integer.parseInt(AvailableMCPList.getSelectedValue().toString().split("MCP ")[1]);
+                    MCP mcp = Function.getMcpByID(MCPid);
+                    mcp.route = route;
+                    route.ListMCPs.add(mcp);
+                    route.setDistance();
+                    CurrentMCP.addElement("MCP " + mcp.id);
+                    AvailableMCP.removeElement("MCP "+mcp.id);
+                    Function.showObjectonList(CurrentMCP, CurMCPList, CurMCPpane);
+                    Function.showObjectonList(AvailableMCP, AvailableMCPList,AvailableMCPpane);
+            }
+        });
+        
+        RemoveButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent evt){
+                Route route = Function.getRouteByName(RouteChooser.getSelectedItem().toString());
+                int MCPid = Integer.parseInt(CurMCPList.getSelectedValue().toString().split("MCP ")[1]); 
+                MCP mcp = Function.getMcpByID(MCPid);
+                mcp.route = null;
+                route.ListMCPs.remove(mcp);
+                route.setDistance();
+                CurrentMCP.removeElement("MCP " + mcp.id);
+                AvailableMCP.addElement("MCP "+mcp.id);
+                Function.showObjectonList(CurrentMCP, CurMCPList, CurMCPpane);
+                Function.showObjectonList(AvailableMCP, AvailableMCPList,AvailableMCPpane);
+            }
+        });
     }//GEN-LAST:event_ManageRouteButtonActionPerformed
 
     private void AssignVecButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignVecButtonActionPerformed
@@ -308,37 +443,9 @@ public class Routing extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(Routing.this,"Assigned");
                 AssignVecButtonActionPerformed(evt);
             }
-        });
-        
+        });      
     }//GEN-LAST:event_AssignVecButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Routing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Routing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Routing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Routing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }
-        //</editor-fold>
 
 
 
