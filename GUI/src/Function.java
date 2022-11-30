@@ -118,4 +118,13 @@ public class Function {
             }
         return null;
     }
+    
+    public static MCP getMcpByID(int id){
+        int size = data.MCPs_data.size();
+        for(int i = 0 ; i < size ; i++){
+            if(data.MCPs_data.get(i).id == id)
+                  return data.MCPs_data.get(i);
+        }
+        return null;
+    }
 }

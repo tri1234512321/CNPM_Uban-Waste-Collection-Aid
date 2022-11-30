@@ -110,7 +110,8 @@ public class Login extends javax.swing.JFrame {
             Vechicle vechicle = new Vechicle(i,i+10+" l/km");
             Janitor janitor = new Janitor(i,"Janitor "+i);
             data.add_Data(route, collector,janitor, mcp, vechicle);
-        }    
+        }
+        data.MCPs_data.get(0).setDistance();
     }
     /**
      * @param args the command line arguments
