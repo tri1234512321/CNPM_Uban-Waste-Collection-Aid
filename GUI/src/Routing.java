@@ -9,8 +9,10 @@
  */
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.util.ArrayList;
+
 public class Routing extends javax.swing.JFrame{
     
     /**
@@ -120,9 +122,9 @@ public class Routing extends javax.swing.JFrame{
                 .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(CreateRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(33, 33, 33)
                 .addComponent(AssignVecButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(33, 33, 33)
                 .addComponent(ManageRouteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(OptimizeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,6 +140,45 @@ public class Routing extends javax.swing.JFrame{
 
     private void OptimizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptimizeButtonActionPerformed
         // TODO add your handling code here:
+        this.jPanel1.removeAll();
+        this.jPanel1.repaint();
+        int size1 = this.data.Routes_data.size();
+        int size2 = this.data.Vechicles_data.size();
+        String[] col = {"Route","VecID"};
+        String[][] data = new String[size1][size2];
+        JTable table = new JTable(data,col);
+        JScrollPane pane = new JScrollPane();
+        this.jPanel1.add(pane);
+        pane.setBounds(5,60,150,200);
+        pane.setViewportView(table);
+        if(size1 > size2 ){
+            JOptionPane.showMessageDialog(this, "There won't be enough vechicle for all routes","Warning",0);
+            size1 = size2;
+        }
+        for(int i = 0 ; i < size1 ; i++){
+            Route route = Function.getMinRouteNotOptimized();
+            if(route.distance == 9999999) break;
+            if(route == null){
+                JOptionPane.showMessageDialog(this,"All Routes are optimized");
+                return;
+            }
+            Vechicle vec = Function.getMaxConsumptionVec();
+            if(vec == null){
+                JOptionPane.showMessageDialog(this,"All Vechicles are optimized");
+                return;
+            }
+            if(route.vechicle != null) route.vechicle.route = null;
+            route.vechicle = vec;
+            vec.route = route;
+            route.optimized = true;
+            route.Not_Optimized.remove(route);
+            vec.optimzed = true;
+            vec.Not_Optimized.remove(vec);
+            String[] add = {route.name,"Vec: "+vec.id};
+            data[i] = add;
+        }
+        DefaultTableModel model = new DefaultTableModel(data,col);
+        table.setModel(model);
     }//GEN-LAST:event_OptimizeButtonActionPerformed
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
@@ -208,7 +249,7 @@ public class Routing extends javax.swing.JFrame{
         
         AvailableMCP.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent evt) {
-                    if (evt.getClickCount() == 2) {
+                    if (evt.getClickCount() >= 2) {
                         String select = AvailableMCP.getSelectedValue().toString();
                         if(select.equals("")) return;
                         System.out.println("Routing->Create Route: Added "+select);
@@ -241,6 +282,7 @@ public class Routing extends javax.swing.JFrame{
                }
                newRoute.ListMCPs = MCPList;
                newRoute.setDistance();
+               newRoute.Not_Optimized.add(newRoute);
                Routing.this.data.Routes_data.add(newRoute);
                JOptionPane.showMessageDialog(Routing.this,"Saved");
                Routing.this.CreateRouteButtonActionPerformed(evt);
@@ -432,6 +474,10 @@ public class Routing extends javax.swing.JFrame{
                                         .toString().split("Vechicle ")[1]);
                 Route route = Function.getRouteByName(Route);
                 Vechicle vec = Function.getVecByID(VecID);
+                if(route.optimized==true){
+                    int ret = JOptionPane.showConfirmDialog(Routing.this,"This Route or Vechicle is optimized. Do you still want to assign?","Confirm",0);
+                    if(ret != 0) return;
+                }
                 if(route.vechicle != null){
                     route.vechicle.route = null;
                 }
@@ -440,6 +486,14 @@ public class Routing extends javax.swing.JFrame{
                 }
                 route.vechicle = vec;
                 vec.route = route;
+                if(!vec.Not_Optimized.contains(vec)){
+                    vec.optimzed = false;
+                    vec.Not_Optimized.add(vec);
+                }
+                if(!route.Not_Optimized.contains(route)){
+                    route.optimized = false;
+                    route.Not_Optimized.add(route);
+                }
                 JOptionPane.showMessageDialog(Routing.this,"Assigned");
                 AssignVecButtonActionPerformed(evt);
             }

@@ -183,15 +183,16 @@ public class Data_info extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getClickCount() >= 2) {
             String select = ObjectList.getSelectedValue();
+            String out = new String();
             switch(this.ObjectChooser.getSelectedItem().toString()){
                 case "Route":
                     Route route = Function.getRouteByName(select);
-                    String out = new String("Route name: "+route.name);
+                    out = out + "Route name: "+route.name;
                     out = out +"\nID: "+ route.id;
                     if(route.vechicle == null) out = out + "\nVechicleID: null";
                     else out = out + "\nVechicleID: " + route.vechicle.id;
                     String MCPs = new String("\nMCPs: ");
-                    if(route.ListMCPs != null){
+                    if(!route.ListMCPs.isEmpty()){
                         int size = route.ListMCPs.size();
                         MCPs = MCPs + "MCP "+route.ListMCPs.get(0).id;
                         for(int i = 1; i < size ; i++){
@@ -209,8 +210,25 @@ public class Data_info extends javax.swing.JFrame {
                 case "Janitor":
                     break;
                 case "MCP":
+                    int MCPid = Integer.parseInt(select.split("MCP ")[1]);
+                    MCP mcp = Function.getMcpByID(MCPid);
+                    out = out + "MCPID: "+mcp.id + "\nLocation: "+mcp.location;
+                    if(mcp.janitor != null) out = out +"\nJanitor: "+mcp.janitor.name;
+                    else out = out+ "\nJanitor: null";
+                    if(mcp.route != null) out = out  +"\nRoute: "+mcp.route.name;
+                    else out = out + "\nRoute: null";
+                    JOptionPane.showMessageDialog(Data_info.this, out, "MCP info", 1);
                     break;
                 case "Vechicle":
+                    int id = Integer.parseInt(select.split("Vechicle ")[1]);
+                    Vechicle vec = Function.getVecByID(id);
+                    out = out + "VechicleID: "+vec.id+"\nFuel consuption: "+
+                            vec.fuel_consumption+" l/km";
+                    if(vec.collector == null) out = out + "\nCollector: null";
+                    else out =out + "\nCollector: "+vec.collector.name;
+                    if(vec.route == null) out = out + "\nRoute: null";
+                    else out = out + "\nRoute: "+vec.route.name;
+                    JOptionPane.showMessageDialog(Data_info.this, out, "Vechicle info", 1);
                     break;
             }
         }

@@ -105,9 +105,11 @@ public class Login extends javax.swing.JFrame {
         Data data = new Data();
         for(int i = 0; i <10 ; i++){
             Route route = new Route(i,"Route "+i);
+            route.Not_Optimized.add(route);
             Collector collector = new Collector(i,"Collector "+i);
             MCP mcp = new MCP(i,"Location "+i);
-            Vechicle vechicle = new Vechicle(i,i+10+" l/km");
+            Vechicle vechicle = new Vechicle(i,i+10);
+            vechicle.Not_Optimized.add(vechicle);
             Janitor janitor = new Janitor(i,"Janitor "+i);
             data.add_Data(route, collector,janitor, mcp, vechicle);
         }

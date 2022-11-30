@@ -127,4 +127,26 @@ public class Function {
         }
         return null;
     }
+    
+    public static Route getMinRouteNotOptimized(){
+        int size = Data.Routes_data.get(0).Not_Optimized.size();
+        if(size == 0) return null;
+        Route route1 = Data.Routes_data.get(0).Not_Optimized.get(0);
+        for(int i = 1 ; i < size ; i++ ){
+            Route route2 = Data.Routes_data.get(i).Not_Optimized.get(i);
+            if(route2.distance < route1.distance) route1 = route2;
+        }
+        return route1;
+    }
+    
+    public static Vechicle getMaxConsumptionVec(){
+        int size = Data.Vechicles_data.get(0).Not_Optimized.size();
+        if(size == 0) return null;
+        Vechicle Vec1 = Data.Vechicles_data.get(0).Not_Optimized.get(0);
+        for(int i = 1 ; i < size ; i++ ){
+            Vechicle Vec2 = Data.Vechicles_data.get(i).Not_Optimized.get(i);
+            if(Vec2.fuel_consumption > Vec1.fuel_consumption ) Vec1 = Vec2;
+        }
+        return Vec1;
+    }
 }

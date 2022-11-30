@@ -15,11 +15,14 @@ public class Route {
     ArrayList<MCP> ListMCPs;
     Vechicle vechicle;
     int distance;
+    boolean optimized;
+    static ArrayList<Route> Not_Optimized = new ArrayList();
     public Route(int id,String name){
         this.id = id;
         this.name = name;
-        this.distance = 0;
+        this.distance = 9999999;
         this.ListMCPs = new ArrayList();
+        this.optimized = false;
     }
     
     public void setDistance(){
