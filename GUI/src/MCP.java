@@ -27,7 +27,7 @@ public class MCP {
             for(int j = i ; j <20 ; j++){
                 if(i == j) this.DistanceToOthers[i][j] = 0;
                 else{
-                    this.DistanceToOthers[i][j] = random.nextInt(100)+1;
+                    this.DistanceToOthers[i][j] = this.DistanceToOthers[j][i] = random.nextInt(100)+1;
                 }
             }
         }
