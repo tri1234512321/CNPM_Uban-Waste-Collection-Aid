@@ -261,6 +261,10 @@ public class Mainpage extends javax.swing.JFrame {
 
     private void AssignVecButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
         // TODO add your handling code here:
+        System.out.println("Mainpage : Clicked Routing button");
+        AssigMCP assigMCP = new AssigMCP(this);
+        this.setVisible(false);
+        assigMCP.setVisible(true);
     }                                               
 
     private void AssignMCPButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                
