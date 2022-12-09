@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package test;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -18,9 +14,12 @@ public class NewJFrame1 extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame1
      */
-    public NewJFrame1() {
+    Mainpage mainpage;
+    Data data = new Data();
+    public NewJFrame1(Mainpage mainpage) {
         initComponents();
-
+        this.mainpage = mainpage;
+        setLocationRelativeTo(this.mainpage);
     }
 
     /**
@@ -39,7 +38,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        btnphuongtien = new javax.swing.JList<>();
+        Listphuongtien = new javax.swing.JList<>();
         thongso = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         thongsoxe = new javax.swing.JTextArea();
@@ -47,7 +46,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         thuhoi = new javax.swing.JButton();
         jbutton2 = new javax.swing.JButton();
-
+        thongsoxe.setEditable(false);
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
@@ -62,7 +61,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(54, 33, 89));
 
         jPanel9.setBackground(new java.awt.Color(54, 33, 89));
@@ -70,7 +69,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(153, 153, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel4.setText("Phương tiện");
+        jLabel4.setText("Vechicle");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -91,13 +90,15 @@ public class NewJFrame1 extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnphuongtien.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Phương tiện 1", "Phương tiện 2", "Phương tiện 3", "Phương tiện 4", "Phương tiện 5", "Phương tiện 6", "Phương tiện 7", "Phương tiện 8", "Phương tiện 9", "Phương tiện 10" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        DefaultListModel ListVec = new DefaultListModel();
+        Function.getData(ListVec,"Vechicle");
+        Function.showObjectonList(ListVec,Listphuongtien,jScrollPane3);
+        
+        Listphuongtien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListphuongtienMouseClicked(evt);
+            }
         });
-        jScrollPane3.setViewportView(btnphuongtien);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,10 +119,6 @@ public class NewJFrame1 extends javax.swing.JFrame {
 
         thongso.setBackground(new java.awt.Color(153, 153, 255));
         thongso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        thongsoxe.setColumns(20);
-        thongsoxe.setRows(5);
-        thongsoxe.setText("Biển số xe :\n\n\nThông số kỹ thuật xe :\n\n\nNhân viên điều hành :\n");
         jScrollPane2.setViewportView(thongsoxe);
 
         javax.swing.GroupLayout thongsoLayout = new javax.swing.GroupLayout(thongso);
@@ -145,7 +142,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton1.setBackground(new java.awt.Color(153, 153, 255));
-        jButton1.setText("Hủy");
+        jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -153,7 +150,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         });
 
         thuhoi.setBackground(new java.awt.Color(153, 153, 255));
-        thuhoi.setText("Thu hồi phương tiện");
+        thuhoi.setText("Recall");
         thuhoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 thuhoiActionPerformed(evt);
@@ -161,7 +158,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         });
 
         jbutton2.setBackground(new java.awt.Color(153, 153, 255));
-        jbutton2.setText("Phân công phương tiện");
+        jbutton2.setText("Assign");
         jbutton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbutton2ActionPerformed(evt);
@@ -249,61 +246,62 @@ public class NewJFrame1 extends javax.swing.JFrame {
 
     private void jbutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutton2ActionPerformed
         System.out.println("NewJFrame1 : Clicked phân công phương tiện button");
-        NewJFrame NewJFrame = new NewJFrame();
-        this.setVisible(false);
+        String selected = this.Listphuongtien.getSelectedValue();
+        int VecID = Integer.parseInt(selected.split("Vechicle ")[1]);
+        Vechicle Vec = Function.getVecByID(VecID);
+        NewJFrame NewJFrame = new NewJFrame(this,Vec);
         NewJFrame.setVisible(true);// TODO add your handling code here:
 
     }//GEN-LAST:event_jbutton2ActionPerformed
 
     private void thuhoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thuhoiActionPerformed
-        System.out.println("NewJFrame1 : Clicked thuhoi button");
-        System.out.println("jPanel3->Create Route: Clicked thuhoi button");
-        JOptionPane.showMessageDialog(null,"Thu hồi thành công");
+        String select = this.Listphuongtien.getSelectedValue();
+        int VecID = Integer.parseInt(select.split("Vechicle ")[1]);
+        Vechicle Vec = Function.getVecByID(VecID);
+        if(Vec.collector == null) JOptionPane.showMessageDialog(this, "Current Vechicle "
+                + "has not assigned to any Collector");
+        else{
+            Vec.collector.vechicle = null;
+            Vec.collector = null;
+            JOptionPane.showMessageDialog(this, "Recall success");
+        }
+        this.updateThongsoxe(Vec);
         // TODO add your handling code here:
 
     }//GEN-LAST:event_thuhoiActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        this.setVisible(false);
+        this.mainpage.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    
+    private void ListphuongtienMouseClicked(java.awt.event.MouseEvent evt) {
+        if(evt.getClickCount() > 2){
+            String select = Listphuongtien.getSelectedValue();
+            String out = new String();
+            int VecID = Integer.parseInt(select.split("Vechicle ")[1]);
+            Vechicle Vec = Function.getVecByID(VecID);
+            this.updateThongsoxe(Vec);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewJFrame1().setVisible(true);
-            }
-        });
     }
-
+    
+    void updateThongsoxe(Vechicle Vec){
+        String out = new String();
+        out = out + "Vec ID: "+Vec.id+"\n";
+        out = out + "Fuel consumption: " + Vec.fuel_consumption + " l/km\n";
+        out = out + "Collector: ";
+        if(Vec.collector != null) out = out + Vec.collector.name+"\n";
+        else out = out + "null\n";
+        out = out + "Route ID: ";
+        if(Vec.route != null) out = out + Vec.route.id;
+        else out = out + "null";
+        thongsoxe.setText(out);
+        jScrollPane2.setViewportView(thongsoxe);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> btnphuongtien;
+    private javax.swing.JList<String> Listphuongtien;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -325,16 +323,4 @@ public class NewJFrame1 extends javax.swing.JFrame {
     private javax.swing.JTextArea thongsoxe;
     private javax.swing.JButton thuhoi;
     // End of variables declaration//GEN-END:variables
-
-    private void setvisible(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void showConfirmDialog(NewJFrame1 aThis, String thu_hồi_phương_tiện_thành_công) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    private void showmessageDialog(NewJFrame1 aThis, String thu_hồi_phương_tiện_thành_công, String a_plain_mess) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

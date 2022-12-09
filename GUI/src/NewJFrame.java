@@ -1,6 +1,7 @@
-package test;
 
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.awt.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,15 +16,14 @@ public class NewJFrame extends javax.swing.JFrame {
   /**
      * Creates new form NewJFrame
      */
-    public NewJFrame(){
-  initComponents();
-
-    /**
-     * Creates new form NewJFram
-     */
-    
-    
-
+    NewJFrame1 Frame;
+    Vechicle Vec;
+    Data data = new Data();
+    public NewJFrame(NewJFrame1 frame,Vechicle Vec){
+        initComponents();
+        this.Frame = frame;
+        this.Vec = Vec;
+        setLocationRelativeTo(this.Frame);
     }
 /**
      * This method is called from within the constructor to initialize the form.
@@ -35,9 +35,6 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jSplitPane1 = new javax.swing.JSplitPane();
         jPanel5 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -45,14 +42,10 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        btnnhanvien = new javax.swing.JList<>();
+        Listnhanvien = new javax.swing.JList<>();
         btnnhanven3 = new javax.swing.JButton();
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel5.setBackground(new java.awt.Color(54, 33, 89));
 
@@ -87,7 +80,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setText("Nhân viên thu gom chưa được phân công phương tiên");
+        jLabel1.setText("Collector List");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -107,13 +100,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnnhanvien.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Nhân viên 1 ", "Nhân viên 2", "Nhân viên 3 ", "Nhân viên 4 ", "Nhân viên 5 ", "Nhân viên 6 ", "Nhân viên 7 ", "Nhân viên 8 ", "Nhân viên 9 ", "Nhân viên 10 ", "Nhân viên 11" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(btnnhanvien);
+        
+        DefaultListModel CollectorList = new DefaultListModel();
+        Function.getData(CollectorList, "Collector");
+        Function.showObjectonList(CollectorList, Listnhanvien, jScrollPane2);
 
         btnnhanven3.setBackground(new java.awt.Color(54, 33, 89));
         btnnhanven3.setForeground(new java.awt.Color(255, 255, 255));
@@ -195,69 +185,46 @@ public class NewJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnnhanven3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnhanven3ActionPerformed
-       System.out.println("jPanel3: Clicked btnnhanvien3 button");
-            JOptionPane.showMessageDialog(null,"Chọn nhân viên thành công");   // TODO add your handling code here:
+        // TODO add your handling code here:
+        String select = this.Listnhanvien.getSelectedValue();
+        Collector collector = Function.getCollectorByname(select);
+        if(collector.vechicle == null){
+            if(this.Vec.collector != null ) this.Vec.collector.vechicle = null;
+            collector.vechicle = this.Vec;
+            this.Vec.collector = collector;
+            JOptionPane.showMessageDialog(this, "Assign success");
+        }
+        else{
+            int ret = JOptionPane.showConfirmDialog(this,"This collector has been assigned"
+                    + "to other vechicle.\nDo you still want to re-assign?", "Warning", 1);
+            if(ret == 0){
+                if(this.Vec.collector != null ) this.Vec.collector.vechicle = null;
+                collector.vechicle.collector = null;
+                collector.vechicle = this.Vec;
+                this.Vec.collector = collector;
+                JOptionPane.showMessageDialog(this,"Assign success");         
+            }
+        }
+        this.Frame.updateThongsoxe(this.Vec);
     }//GEN-LAST:event_btnnhanven3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-System.out.println("NewJFrame : Clicked Back button");        // TODO add your handling code here:
-        
-         new NewJFrame1().setVisible(true);
-
-        //this.NewJFrame.setVisible(true);
         this.dispose();
-        this.setVisible(false); 
+        this.setVisible(false);
+        this.Frame.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-       NewJFrame frame4=new NewJFrame();
-frame4.setTitle("NewJFrame4");
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            frame4.setVisible(true);
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnnhanven3;
-    private javax.swing.JList<String> btnnhanvien;
+    private javax.swing.JList<String> Listnhanvien;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
   
